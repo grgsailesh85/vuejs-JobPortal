@@ -1,7 +1,10 @@
 <script setup>
+import { RouterLink } from "vue-router";
 import JobListing from "@/components/JobListing.vue";
-import jobData from "@/jobs.json";
-import { ref, defineProps } from "vue";
+import { reactive, defineProps, onMounted } from "vue";
+import PulseLoader from "vue-spinner/src/PulseLoader.vue";
+import axios from "axios";
+
 
 defineProps({
   limit: Number,
@@ -10,19 +13,38 @@ defineProps({
     default: false,
   },
 });
-const jobs = ref(jobData);
+const state = reactive({
+  jobs: [],
+  isLoading: true,
+});
 
+onMounted(async () => {
+  try {
+    const response = await axios.get("http://localhost:8000/jobs");
+    state.jobs = response.data;
+  } catch (error) {
+    console.log("Error fetching jobs", error);
+  } finally {
+    state.isLoading = false;
+  }
+});
 </script>
 <template>
   <section>
     <div class="container-xl lg:container m-auto">
-      <h2 clas="text-3xl font-bold text-green-500 mb-6 text-center">
+      <h2 class="text-3xl font-bold text-green-500 mb-6 mt-4 text-center">
         Browse Jobs
       </h2>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- show loading spinner while loading is true -->
+      <div v-if="state.isLoading" class="text-center text-gray-500 py-6">
+        <PulseLoader />
+      </div>
+
+      <!-- show job list when loading is false or completed -->
+      <div v-else class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <!-- :job = "job" is a prop that is passed to the child component -->
         <JobListing
-          v-for="job in jobs.slice(0, limit || jobs.length)"
+          v-for="job in state.jobs.slice(0, limit || state.jobs.length)"
           :key="job.id"
           :job="job"
         />
@@ -30,10 +52,11 @@ const jobs = ref(jobData);
     </div>
   </section>
   <section v-if="showButton" class="m-auto max-w-lg my-10 px-6">
-    <a
-      href="/jobs"
+    <RouterLink
+      to="/jobs"
       class="block bg-black text-white text-center py-4 px-6 rounded-xl hover:bg-gray-700"
-      >View All Jobs</a
     >
+      View All Jobs
+    </RouterLink>
   </section>
 </template>
