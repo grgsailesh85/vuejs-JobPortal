@@ -1,6 +1,7 @@
 <script setup>
 import { RouterLink } from "vue-router";
 import { defineProps, ref, computed } from "vue";
+
 const props = defineProps({
   job: Object,
 });
@@ -19,6 +20,7 @@ const truncatedDescription = computed(() => {
   return description;
 });
 </script>
+
 <template>
   <div class="bg-white rounded-xl shadow-md relative">
     <div class="p-4">
@@ -33,7 +35,7 @@ const truncatedDescription = computed(() => {
         </div>
         <button
           @click="toggleFullDescription"
-          class="text-green-500 hover:text-green-600 mb-5 cursor-pointer"
+          class="text-green-500 hover:text-green-600 mb-5"
         >
           {{ showFullDescription ? "Less" : "More" }}
         </button>

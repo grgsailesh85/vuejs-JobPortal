@@ -7,6 +7,7 @@ const isActiveLink = (routePath) => {
   return route.path === routePath;
 };
 </script>
+
 <template>
   <nav class="bg-green-700 border-b border-green-500">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -34,9 +35,8 @@ const isActiveLink = (routePath) => {
                   'py-2',
                   'rounded-md',
                 ]"
+                >Home</RouterLink
               >
-                Home
-              </RouterLink>
               <RouterLink
                 to="/jobs"
                 :class="[
@@ -48,9 +48,8 @@ const isActiveLink = (routePath) => {
                   'py-2',
                   'rounded-md',
                 ]"
+                >Jobs</RouterLink
               >
-                Jobs
-              </RouterLink>
               <RouterLink
                 to="/jobs/add"
                 :class="[
@@ -62,9 +61,8 @@ const isActiveLink = (routePath) => {
                   'py-2',
                   'rounded-md',
                 ]"
+                >Add Job</RouterLink
               >
-                Add Job
-              </RouterLink>
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
 <script setup>
 import { defineProps } from "vue";
-// passing Props to the component
+
+// passing props to the component
 defineProps({
   title: {
     type: String,
-    // default value if the props is not passed
-    default: "Become a vue Dev",
+    default: "Become a Vue Dev",
   },
   subtitle: {
     type: String,
@@ -13,6 +13,7 @@ defineProps({
   },
 });
 </script>
+
 <template>
   <section class="bg-green-700 py-20 mb-4">
     <div
